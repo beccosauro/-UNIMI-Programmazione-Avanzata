@@ -27,4 +27,15 @@ def freqs(filename,thresold):
     wordCounter.sort(key = lambda x: x[1], reverse=True)
     print(wordCounter)
 
-freqs("Enrico_IV.txt",400)
+#freqs("Enrico_IV.txt",100)
+
+### ESERCIZIO 3 ###
+import itertools
+
+
+def sin(x,n):
+    fact = ((n-1)*n if n>1 else 1 for n in itertools.count(1,2))
+    x=float(x)
+    return sum([x/next(fact) if idx%2!=0 else -1*(x/next(fact)) for idx,_ in enumerate(range(1,n+1),1)])
+
+print (sin(3,20))
