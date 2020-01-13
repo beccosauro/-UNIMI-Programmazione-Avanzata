@@ -17,4 +17,12 @@ def fibo():
 counter,number = next((count,num) for count,num in enumerate(fibo()) if len(str(num))>=1000)
 print("The %d-th term has %d digits"%(counter,len(str(number))))
 
-## ESERCIZIO 2
+### ESERCIZIO 2 ###
+import re,collections
+def freqs(filename,thresold):
+    with open(filename,'r') as file:
+        wordList = re.findall(r'(\w+)', file.read().lower)
+    wordCounter = collections.Counter(wordlist)
+    wordCounter.
+
+freqs("Enrico_IV.txt")
