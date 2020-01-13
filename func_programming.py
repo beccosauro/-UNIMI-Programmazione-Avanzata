@@ -33,7 +33,7 @@ def freqs(filename,thresold):
 import itertools
 
 
-def sin(x,n):
+def sin(x, n):
     fact = ((n-1)*n if n>1 else 1 for n in itertools.count(1,2))
     x=float(x)
     return sum([x/next(fact) if idx%2!=0 else -1*(x/next(fact)) for idx,_ in enumerate(range(1,n+1),1)])
