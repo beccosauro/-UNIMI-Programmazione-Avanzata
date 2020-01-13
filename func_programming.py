@@ -14,10 +14,7 @@ def fibo():
         yield b
         a,b = b,a+b
 
-f = enumerate(fibo())
-x = 0
-while len(str(x)) < 1000:
-    i,x = next(f)
+counter,number = next((count,num) for count,num in enumerate(fibo()) if len(str(num))>=1000)
+print("The %d-th term has %d digits"%(counter,len(str(number))))
 
-print("The %d-th term has %d digits"%(i+1,len(str(x))))
-
+## ESERCIZIO 2
