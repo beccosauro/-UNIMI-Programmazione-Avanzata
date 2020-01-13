@@ -21,8 +21,10 @@ print("The %d-th term has %d digits"%(counter,len(str(number))))
 import re,collections
 def freqs(filename,thresold):
     with open(filename,'r') as file:
-        wordList = re.findall(r'(\w+)', file.read().lower)
-    wordCounter = collections.Counter(wordlist)
-    wordCounter.
+        wordList = re.findall(r'(\w+)', file.read().lower())
+    
+    wordCounter = filter(lambda x: x[1]>=thresold, collections.Counter(wordList).items())
+    wordCounter.sort(key = lambda x: x[1], reverse=True)
+    print(wordCounter)
 
-freqs("Enrico_IV.txt")
+freqs("Enrico_IV.txt",400)
