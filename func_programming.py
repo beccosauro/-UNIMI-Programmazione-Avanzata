@@ -32,7 +32,6 @@ def freqs(filename,thresold):
 ### ESERCIZIO 3 ###
 import itertools
 
-
 def sin(x, n):
     fact = ((n-1)*n if n>1 else 1 for n in itertools.count(1,2))
     x=float(x)

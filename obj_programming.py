@@ -39,10 +39,26 @@ class ShapeIterator:
         actual = self._shapes[self._index]
         self._index+=1
         return actual
-    
-   
-
 
 shapes=ShapeIterator([Square(6),Square(10),Square(5),Rectangle(12,4),Rectangle(12,12)])
 iteratore = iter(shapes)
-for x in iteratore: print(x)
+#for x in iteratore: print(x)
+
+#Exercise 2: Playing around with Algebra.
+import operator,functools,itertools
+class Monoid:
+    def __init__(self,elements,op):
+        self._set = list(itertools.product(itertools.islice(elements,20),repeat=2))
+        self._op =  { "+": operator.add, "*": operator.mul }[op]
+
+    whole = property(lambda self: self._set)
+    op = property(lambda self: self._op)  
+    
+    def getIdentity(self):
+        print(operator.is_(0,0))
+        whole = [self.whole[x:x+20] for x in range(0,len(self.whole),20)]
+        print(whole)
+        return list(map(lambda x:operator.is_(x[0],x[1]),whole))
+
+monoide = Monoid(itertools.count(),"+") 
+print(monoide.getIdentity())       
