@@ -35,6 +35,7 @@ class ShapeIterator:
         return self
 
     def __next__(self):
+        if self._index>=len(self._shapes): raise StopIteration
         actual = self._shapes[self._index]
         self._index+=1
         return actual
@@ -44,6 +45,4 @@ class ShapeIterator:
 
 shapes=ShapeIterator([Square(6),Square(10),Square(5),Rectangle(12,4),Rectangle(12,12)])
 iteratore = iter(shapes)
-print(next(iteratore))
-print(next(iteratore))
-print(next(iteratore))
+for x in iteratore: print(x)
