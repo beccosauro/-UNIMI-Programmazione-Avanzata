@@ -26,6 +26,24 @@ class Square:
         return "I m a Square! My side are: {0}\nMy area is {1}".\
         format(self._width, self.calculate_area())
 
-shapes = [Square(6),Square(10),Square(5),Rectangle(12,4),Rectangle(12,12)]
-shapes.sort(key = lambda x: x.calculate_area())
-for x in shapes:print(x)
+class ShapeIterator:
+    def __init__(self, shapes):
+        self._shapes = sorted(shapes,key = lambda x: x.calculate_area())
+        self._index = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        actual = self._shapes[self._index]
+        self._index+=1
+        return actual
+    
+   
+
+
+shapes=ShapeIterator([Square(6),Square(10),Square(5),Rectangle(12,4),Rectangle(12,12)])
+iteratore = iter(shapes)
+print(next(iteratore))
+print(next(iteratore))
+print(next(iteratore))
