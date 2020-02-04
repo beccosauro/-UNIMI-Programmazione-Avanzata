@@ -29,6 +29,7 @@ def sudoku():
     for m in combinations:
         if rowCond(m) and columnCond(m) and subMatrixCond(m): 
             print (m)
-
+    print(len(combinations))
 sudoku()
 
+25728 
