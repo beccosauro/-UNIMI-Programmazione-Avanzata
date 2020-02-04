@@ -44,7 +44,7 @@ shapes=ShapeIterator([Square(6),Square(10),Square(5),Rectangle(12,4),Rectangle(1
 iteratore = iter(shapes)
 #for x in iteratore: print(x)
 
-#Exercise 2: Playing around with Algebra.
+#Exercise 2: Playing around with Algebra. Non capisco l'algebra
 import operator,functools,itertools
 class Monoid:
     def __init__(self,elements,op):
@@ -55,10 +55,11 @@ class Monoid:
     op = property(lambda self: self._op)  
     
     def getIdentity(self):
-        print(operator.is_(0,0))
+        
         whole = [self.whole[x:x+20] for x in range(0,len(self.whole),20)]
         print(whole)
+
         return list(map(lambda x:operator.is_(x[0],x[1]),whole))
 
-monoide = Monoid(itertools.count(),"+") 
+monoide = Monoid([True,False],"+") 
 print(monoide.getIdentity())       
