@@ -15,8 +15,7 @@ Note that the solutions which calculate the combinations via a nested loops are 
 import itertools,functools
 flatten = lambda l: [item for sublist in l for item in sublist]
 
-def getSubMatrix():
-    matrix = [[x for x in range(4)] for y in range(4)]
+def getSubMatrix(matrix):
     diagonaLeft = [list(itertools.product((x,x+1),repeat=2)) for x in range(0,3,2)]
     diagonalRight = [[x for x in list(itertools.product((0,1,2,3),repeat=2)) if x not in flatten(diagonaLeft)][i:i+4]  for i in range(0,7,4)]
     [diagonaLeft.append(x) for x in diagonalRight]
@@ -26,10 +25,10 @@ def sudoku():
     combinations = list(itertools.permutations([list(x) for x in itertools.permutations([1,2,3,4],4)] ,4))
     rowCond = lambda matrix : functools.reduce(lambda x,y: x and y ,map(lambda y:len(set(y)) == 4,matrix))
     columnCond = lambda matrix : functools.reduce(lambda x,y: x and y ,map(lambda y:len(set(y)) == 4,zip(*matrix)))
-    #TODO subMatrixCond = lambda comb : 
+    subMatrixCond = lambda comb : rowCond (getSubMatrix(comb))
     for m in combinations:
-        if rowCond(m) and columnCond(m): print (m)
-        break
-    
-getSubMatrix()
+        if rowCond(m) and columnCond(m) and subMatrixCond(m): 
+            print (m)
+
+sudoku()
 
