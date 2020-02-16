@@ -14,13 +14,11 @@ def getReverse(word):
 
 def exploreMatrix(pos,seen):
     neigh=getNeighbour(pos,seen)
+    seen.append(pos)
     if not neigh:
-        seen.append(pos)
         [words.add(w) for w in getReverse(getWord(seen)) if dictionary.get(w)]
     else:
-        seen.append(pos)
         [exploreMatrix(p,seen.copy()) for p in neigh]
-
 
 matrixSize, words = 4, set()
 dictionary = {w.strip():True for w in open("dictionary.txt")}
