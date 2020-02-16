@@ -14,7 +14,8 @@ The exercise consists of writing a function ruzzles that calculates all the Engl
 import itertools
 dictionary = open("dictionary.txt").read()
 isWord = lambda w: w in dictionary
-input, size = ["mous","dogs","cats","dream"],2
+getWord = lambda pos: "".join([input[x[0]][x[1]] for x in pos])
+input, size = ["is","to"],2
 
 positions = list(itertools.product(range(size),repeat=2))
 movements = [x for x in itertools.product(range(-1,2),repeat=2) if sum(x)==1 or sum(x)==-1]
@@ -23,29 +24,21 @@ sumTuple = lambda x,y: tuple([sum(x) for x in zip(x,y)])
 def getNeighbour(pos,seen):
     return [sumTuple(pos,x) for x in movements if 0<=sumTuple(pos,x)[0]<size and 0<=sumTuple(pos,x)[1]<size and sumTuple(pos,x) not in seen]
 
-text=[]
-l=[]
+def getReverse(word):
+    c= []
+
+text=set()
 def rec(pos,seen):
     neigh=getNeighbour(pos,seen)
     if len(neigh)==0:
         seen.append(pos)
-        text.append(seen)
-    
-    elif len(neigh)==1:
-        seen.append(pos)
-        rec(neigh[0],seen)
+        text.add(getWord(seen))
     else:
-        seen.extend(neigh.pop())
+        seen.append(pos)
         for p in neigh:
-            
-            print(neigh,seen)
-            break
-            rec(p,seen)
+            rec(p,seen.copy())
         
-            
-            
-           
-            
+for p in positions:
+    rec(p,[])
 
-rec((0,0),[])
 print(text)
