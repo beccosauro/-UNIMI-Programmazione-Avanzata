@@ -24,7 +24,7 @@ def exploreMatrix(pos,seen):
 
 matrixSize, words = 4, set()
 dictionary = [w.strip() for w in open("dictionary.txt")]
-positions = list(itertools.product(range(matrixSize),repeat=2))
+positions = itertools.product(range(matrixSize),repeat=2)
 movements = [x for x in itertools.product(range(-1,2),repeat=2) if sum(x)==1 or sum(x)==-1]
 
 input = ["walk", "moon", "hate", "rope"] 
