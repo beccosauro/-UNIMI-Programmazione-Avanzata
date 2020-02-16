@@ -20,6 +20,7 @@ def exploreMatrix(pos,seen):
     else:
         [exploreMatrix(p,seen.copy()) for p in neigh]
 
+
 matrixSize, words = 4, set()
 dictionary = {w.strip():True for w in open("dictionary.txt")}
 positions = itertools.product(range(matrixSize),repeat=2)
