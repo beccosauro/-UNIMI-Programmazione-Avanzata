@@ -16,18 +16,17 @@ def exploreMatrix(pos,seen):
     neigh=getNeighbour(pos,seen)
     if not neigh:
         seen.append(pos)
-        [words.add(w) for w in getReverse(getWord(seen)) if w in dictionary]
+        [words.add(w) for w in getReverse(getWord(seen)) if dictionary.get(w)]
     else:
         seen.append(pos)
         [exploreMatrix(p,seen.copy()) for p in neigh]
 
 
 matrixSize, words = 4, set()
-dictionary = [w.strip() for w in open("dictionary.txt")]
+dictionary = {w.strip():True for w in open("dictionary.txt")}
 positions = itertools.product(range(matrixSize),repeat=2)
 movements = [x for x in itertools.product(range(-1,2),repeat=2) if sum(x)==1 or sum(x)==-1]
 
 input = ["walk", "moon", "hate", "rope"] 
 [exploreMatrix(p,[]) for p in positions]
-
 print(sorted(words))
