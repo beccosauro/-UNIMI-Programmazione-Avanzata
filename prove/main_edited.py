@@ -1,4 +1,4 @@
-from edited import *
+from prove.edited import *
 
 if __name__ == '__main__':
     print("### witness → fatness")
