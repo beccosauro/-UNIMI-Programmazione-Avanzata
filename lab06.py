@@ -33,10 +33,20 @@ class MultiTriggeredMethod(type):
 
 
 class Spell(type):
+    workerAttr = {}
     def __init__(self, name, bases, dic):
-        print(self)
+        if name=="Worker":
+            Spell.workerAttr = dic.copy()
         return type.__init__(self, name, bases, dic)
 
+    def __call__(cls,*args,**kwargs):
+        if cls.__name__=="Person":
+            setattr(cls,'_Worker__pay_per_hour',8)
+            [setattr(cls,k,v) for k,v in Spell.workerAttr.items() if not "init" in k]
+            return type.__call__(cls, *args, **kwargs)
+        return type.__call__(cls, *args, **kwargs)
+
+    
 
 class Person(metaclass=Spell):
     def __init__(self, n, s, b):
@@ -44,23 +54,19 @@ class Person(metaclass=Spell):
         self.__surname = s
         self.__birthday = b
 
-    name = property(lambda self: self.__name, lambda self, v: setattr(self, "__name", v))
-    surname = property(lambda self: self.__surname, lambda self, v: setattr(self, "__surname", v))
-    birthday = property(lambda self: self.__birthday, lambda self, v: setattr(self, "__birthday", v))
+    name = property(lambda self: self.__name, lambda self, v: setattr(self, "_Person__name", v))
+    surname = property(lambda self: self.__surname, lambda self, v: setattr(self, "_Person__surname", v))
+    birthday = property(lambda self: self.__birthday, lambda self, v: setattr(self, "_Person__birthday", v))
 
     def __repr__(self):
         return "I'm %s %s and I'm %s years old" % (self.name, self.surname, self.birthday)
 
-    def prova(self):
-        print("dsads")
-
-
 class Student(Person):
     def __init__(self, *args, lect):
         super().__init__(*args)
-        self.__lecture = lect
+        self._lecture = lect
 
-    lecture = property(lambda self: self.__lecture, lambda self, v: setattr(self, "__lecture", v))
+    lecture = property(lambda self: self.__lecture, lambda self, v: setattr(self, "_Student__lecture", v))
     grade_average = property(lambda self: sum(self.lecture.values()) / len(self.lecture))
 
     def __repr__(self):
@@ -72,13 +78,18 @@ class Worker(Person):
         super().__init__(*args)
         self.__pay_per_hour = pph
 
-    day_salary = property(lambda self: self.__pay_per_hour * 8, lambda self, v: setattr(self, "__pay_per_hour", v / 8))
+    pph = property(lambda self: self.__pay_per_hour, lambda self, v: setattr(self, "_Worker__pay_per_hour", v))
+
+    day_salary = property(lambda self: self.__pay_per_hour * 8, lambda self, v: setattr(self, "_Worker__pay_per_hour", v / 8))
+    
     week_salary = property(lambda self: self.day_salary * 5,
-                           lambda self, v: setattr(self, "__pay_per_hour", v / (5 * 8)))
+                           lambda self, v: setattr(self, "_Worker__pay_per_hour", v / (5 * 8)))
+    
     month_salary = property(lambda self: self.week_salary * 4,
-                            lambda self, v: setattr(self, "__pay_per_hour", v / (5 * 8 * 4)))
+                            lambda self, v: setattr(self, "_Worker__pay_per_hour", v / (5 * 8 * 4)))
+    
     year_salary = property(lambda self: self.month_salary * 12,
-                           lambda self, v: setattr(self, "__pay_per_hour", v / (5 * 8 * 4 * 12)))
+                           lambda self, v: setattr(self, "_Worker__pay_per_hour", v / (5 * 8 * 4 * 12)))
 
 
 class Wizard(Person):
@@ -92,4 +103,9 @@ class Wizard(Person):
 
 
 ilaria = Student("ilaria", "Picci", "25", lect={"mate": 22, "fisica": 30, "chimica": 30})
-s = Person("ilaria", "Picci", "25")
+simo = Person("Simone","Cerioli","26")
+w = Worker("Simone","Cerioli","26")
+
+
+simo.name="andrea"
+print(simo)
