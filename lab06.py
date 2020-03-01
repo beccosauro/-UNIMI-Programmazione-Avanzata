@@ -14,7 +14,7 @@ class Counter(type):
 
 class MultiTriggeredMethod(type):
     counter = []
-
+    counter
     def countMethod(fun):
         def wrapper(*args):
             if fun.__name__ in MultiTriggeredMethod.counter:
